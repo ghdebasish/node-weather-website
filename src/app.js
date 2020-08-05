@@ -54,18 +54,26 @@ app.get('/weather', (req, res) => {
             return res.send({ error });
         }
 
-        weather(latitude, longitude, 'current', (error, { current } = {}) => {
+        weather(latitude, longitude, req.query.weathertype, (error, { current, forecast } = {}) => {
             if (error) {
                 return res.send({ error });
             }
 
-            res.send({
-                forecast: current.weather_descriptions[0],
-                location: location,
-                temperature: current.temperature,
-                rain: current.precip
-            });
+            if (req.query.weathertype == "current") {
+                return res.send({
+                    messageOne: 'Your location is : ' + location,
+                    messageTwo: 'Outside is ' + current.weather_descriptions[0] + '. It is currently ' + current.temperature + ' degrees out. There is ' + current.precip + '% chance of rain.'
+                });
+            }
+            else if (req.query.weathertype == "forecast") {
+                const today = new Date().toISOString().split('T')[0];
+                const forecastData = forecast[today];
 
+                return res.send({
+                    messageOne: 'Your location is : ' + location,
+                    messageTwo: 'Today\'s max/min Temparature  is ' + forecastData.mintemp + ' / ' + forecastData.maxtemp
+                });
+            }
         });
         //weather(latitude, longitude, 'forecast', getWeatherForcast)
 

@@ -71,12 +71,10 @@ app.get('/weather', (req, res) => {
 
                 return res.send({
                     messageOne: 'Your location is : ' + location,
-                    messageTwo: 'Today\'s max/min Temparature  is ' + forecastData.mintemp + ' / ' + forecastData.maxtemp
+                    messageTwo: 'Today\'s max / min Temparature  is ' + forecastData.mintemp + ' / ' + forecastData.maxtemp
                 });
             }
         });
-        //weather(latitude, longitude, 'forecast', getWeatherForcast)
-
     })
 })
 

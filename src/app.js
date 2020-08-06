@@ -66,12 +66,11 @@ app.get('/weather', (req, res) => {
                 });
             }
             else if (req.query.weathertype == "forecast") {
-                const today = new Date().toISOString().split('T')[0];
-                const forecastData = forecast[today];
+                const forecastData = forecast[Object.keys(forecast)[0]];
 
                 return res.send({
                     messageOne: 'Your location is : ' + location,
-                    messageTwo: 'Today\'s max / min Temparature  is ' + forecastData.mintemp + ' / ' + forecastData.maxtemp
+                    messageTwo: 'Day is ' + forecastData.date + ' and max / min Temparature  is ' + forecastData.mintemp + ' / ' + forecastData.maxtemp
                 });
             }
         });
